@@ -1,0 +1,222 @@
+$fekete: #000;
+$szurke: #ddd;
+$blue: #6af;
+$glow: #ff8;
+$column-width: 800px;
+
+html, body, div, img {
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+}
+
+a {
+  text-decoration: none;
+  color: $fekete;
+  outline: 0;
+}
+
+body > .ember-view {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  background-color: $blue;
+  padding: 20px;
+  .title {
+    margin: 36px;
+    font-size: 1.75em;
+    display: inline;
+  }
+  .tagline { white-space: nowrap; }
+  .logo {
+    width:  250px;
+    height: 250px;
+    background: url('/images/logo.png') 0% 0%;
+    background-size: cover;
+    transition: transform 0.5s;
+  }
+}
+
+header:hover {
+  .logo {
+    background: url(/images/logo.png) 0% 100%;
+    background-size: cover;
+    transform: rotate(-45deg);
+  }
+  .hat { color: #fff; }
+}
+
+header.small {
+  padding: 5px;
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
+  .title {
+    margin: 0px 20px;
+    font-size: 1em;
+  }
+  h1 { margin: 0px; }
+  .tagline { display: none; }
+}
+
+toolbar {
+  background-color: $szurke;
+  height: 40px;
+}
+
+.item {
+  float: right;
+  a {
+    display: table-cell;
+    vertical-align: middle;
+    height: 40px;
+    padding: 0px 15px;
+    background-color: $blue;
+    cursor: pointer;
+  }
+  a:hover { background-color: $glow; }
+  img { height: 40px; }
+}
+
+@mixin whatform {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  background-color: #fff;
+  border: 1px solid $fekete;
+  padding: 5px;
+  margin-bottom: 10px;
+  @at-root:focus { border-color: $blue; }
+}
+
+form {
+  textarea { @include whatform; }
+  input    { @include whatform; }
+}
+
+.comment-form {
+  padding: 10px 0px;
+}
+
+.center-column {
+  flex: 1;
+  margin: 0px auto;
+  max-width: $column-width;
+  
+  .center { text-align: center; }
+}
+
+.view-post {
+  .cover {
+    width: 100%;
+    background-color: $blue;
+  }
+  .content {
+    font-size: 1.4em;
+    a { color: #17f; }
+  }
+}
+
+.comments {
+  display: flex;
+  flex-flow: column;
+}
+
+.comment {
+  background-color: $szurke;
+  width: 100%;
+  margin: 5px 0px;
+  display: flex;
+  .avatar {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+  }
+  .right-side {
+    padding: 5px;
+    width: 100%;
+  }
+  .content {
+    padding: 8px;
+    a { color: #17f; }
+  }
+}
+
+.summary {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 10px 0px;
+  background-color: $szurke;
+  width: 100%;
+  .thumb {
+    height: 250px;
+    width: 100%;
+    margin: 5px;
+    object-fit: cover;
+    background-color: $blue;
+  }
+  .description {
+    padding: 5px;
+    text-align: left;
+  }
+}
+
+.summary:hover {
+  background-color: $glow;
+}
+
+@media (min-width: $column-width) {
+  .summary .thumb { width: 250px; }
+  .center-column { width: 100%; }
+}
+
+footer {
+  background-color: $fekete;
+  padding: 20px;
+  a { color: $szurke; }
+}
+
+.auth-modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.75);
+  text-align: center;
+  padding: 150px 0px;
+  a {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 25px;
+    cursor: pointer;
+    font-size: 5em;
+  }
+  a:hover { background-color: $glow; }
+}
+
+.youtube-video {
+  width: 100%;
+  display: inline-block;
+  padding-bottom: percentage(9/16);
+  height: 0;
+  overflow: hidden;
+  position: relative;
+  background-color: $blue;
+}
+
+.youtube-video iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

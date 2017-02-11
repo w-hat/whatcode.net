@@ -1,0 +1,14 @@
+CF::Size = [x -48 y -48 s 300 150]
+CF::MinimumSize = .4
+
+startshape what
+
+shape what { loop i=(16) []
+  if (!bitand(9921, 2^i)) {
+    xy = (32*div(i,4), 32*mod(i,4))
+    block [s 30 x xy]
+    what [x xy r 0..360 s .7 a -.4 z -1 b .5]
+  }
+}
+
+shape block { SQUARE [] }

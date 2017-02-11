@@ -1,0 +1,7 @@
+CF::Size = [x -7.5 y -3.5 s 15 7.5]
+
+startshape what [b .9]
+shape what { loop i=(128) [] if (0..2 < 1)
+  block [h (randint(2)*240) sat 0...8 x (div(i,8), mod(i,8))]
+}
+shape block { CIRCLE [s 5] block [s 0.8 z 1] }

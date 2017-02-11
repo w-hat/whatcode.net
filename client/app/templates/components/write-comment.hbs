@@ -1,0 +1,13 @@
+{{#if session.coder}}
+<form class="comment-form">
+  <label for='content'>Add comment:</label>
+  {{textarea value=comment.content autoresize=true rows=6 max-rows=20}}
+  <label for='Preview'>Preview:</label>
+  {{view-comment comment=comment}}
+  <button type="submit" {{action "submit"}}>Comment</button>
+</form>
+{{else}}
+<div class="item">
+  <a {{action 'showModal' true}}>Authenticate to Comment</a>
+</div>
+{{/if}}

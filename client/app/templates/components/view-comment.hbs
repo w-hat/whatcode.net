@@ -1,0 +1,6 @@
+<img class="avatar" src="{{comment.author.avatar}}">
+<div class="right-side">
+  <div class="author">{{comment.author.display}}</div>
+  <div class="time">{{comment.created}}</div>
+  {{what-bars comment.content enabled sanitizer class="content"}}
+</div>

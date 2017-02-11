@@ -1,0 +1,10 @@
+CF::Background = [a -1]
+
+startshape what
+
+shape what { loop i=(16) [] if (!bitand(9921, 2^i))
+  block [s 115 x (123*div(i,4), 123*mod(i,4))]
+}
+
+shape block { SQUARE [] }
+shape block { SQUARE [b 1] }

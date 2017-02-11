@@ -1,0 +1,11 @@
+{{view-post post=model}}
+
+<div class="comments">
+  <h2 class="center">Comments</h2>
+  {{#each model.comments as |comment|}}
+    {{view-comment comment=comment}}
+  {{else}}
+  <p class="center">Comments do not exist.</p>
+  {{/each}}
+  {{write-comment post=model}}
+</div>

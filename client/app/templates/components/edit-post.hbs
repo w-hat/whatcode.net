@@ -1,0 +1,8 @@
+<form class="post-form">
+  <div><label>Title: </label> {{input value=post.title}}</div>
+  <div><label>Path:  </label> {{path}}</div>
+  <div><label>Image: </label> {{input value=post.image}}</div>
+  <label for='content'>Body:</label>
+  {{textarea value=post.content autoresize=true rows=6 max-rows=25}}
+  <button type="submit" {{action "publish"}}>Publish!</button>
+</form>

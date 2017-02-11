@@ -1,0 +1,6 @@
+{
+  "name": "whatcode",
+  "dependencies": {
+    "markdown-it": "^8.2.2"
+  }
+}
