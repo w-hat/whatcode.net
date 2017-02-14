@@ -40,6 +40,14 @@ describe('Server', () => {
     });
   });
   
+  describe('GET /s/posts/:post_id', () => {
+    it("should return posts by id", done => {
+      request.get('/s/posts/' + fixtures.Post[0]._id).expect(res => {
+        res.body.post.path.should.equal("life-is-like-a-sonnet");
+      }).expect(200, done);
+    });
+  });
+  
   describe('GET /s/posts?path=', () => {
     it("should return posts by path", done => {
       request.get('/s/posts?path=life-is-like-a-sonnet').expect(res => {
