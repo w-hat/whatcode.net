@@ -7,5 +7,6 @@ export default Ember.Route.extend({
       author: this.get('session.coder'),
       image: '/ember-welcome-page/images/construction.png'
     };
-  }
+  },
+  titleToken: 'Edit Post'
 });
