@@ -223,22 +223,23 @@ footer {
 }
 
 .arimaa-position {
+  float: none;
   background-color: #999;
   margin: 4px;
-  padding: 6px;
   border: 1px solid;
   border-color: #999;
+  width: 8 * $piece_size + 12px;
+}
+
+.arimaa-position .color-wrapper {
+  padding: 6px;
   width: 8 * $piece_size;
-  height: 8 * $piece_size;
 }
 
-.arimaa-position.gold {
-  background-color: #fff;
-}
-
-.arimaa-position.silver {
-  background-color: #000;
-}
+.arimaa-position.gold .color-wrapper { background-color: #fff; }
+.arimaa-position.silver .color-wrapper { background-color: #000; }
+.arimaa-position.left { float: left; }
+.arimaa-position.right { float: right; }
 
 .arimaa-position-inner {
   background-color: #ddd;
@@ -249,14 +250,26 @@ footer {
   height: 8 * $piece_size;
 }
 
+.arimaa-position-caption {
+  background-color: #ccc;
+  margin: 4px;
+  padding: 4px;
+  font-size: 75%;
+  p { margin: 0px; }
+}
+
 .arimaa-piece {
   width: $piece_size;
   height: $piece_size;
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
-  transition: margin 0.25s, transform 1s;
+  transition: margin 0.2s, transform 0.2s;
   z-index: 30;
+}
+
+.arimaa-piece:hover {
+  transform: scale(1.15, 1.15);
 }
 
 .gelephant { background-image: url(/images/arimaa/vector/w-elephant.svg); }

@@ -5,6 +5,8 @@ export default Ember.Route.extend({
     return {
       title: 'Untitled Post',
       author: this.get('session.coder'),
+      posted: '▮▮▮ ▮▮▮ ▮▮ ▮▮▮▮ ▮▮:▮▮:▮▮ GMT-▮▮▮▮ (▮▮▮)',
+      path: '/',
       image: '/ember-welcome-page/images/construction.png'
     };
   },

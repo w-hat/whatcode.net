@@ -5,8 +5,9 @@ const md = markdown({linkify: true});
 
 export default Ember.Component.extend({
   classNames: ['view-post'],
-  enabled:  ['youtube-video'],
+  enabled:  ['youtube-video', 'arimaa-position'],
   sanitizer(s) {
     return Ember.String.htmlSafe(md.render(s));
   }
 });
+

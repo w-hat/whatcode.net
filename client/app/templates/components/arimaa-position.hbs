@@ -1,5 +1,11 @@
-<div class="arimaa-position-inner">
-  {{#each pieces as |piece|}}
-    {{arimaa-piece piece=piece}}
-  {{/each}}
+<div class="color-wrapper">
+  <div class="arimaa-position-inner">
+    {{#each pieces as |piece|}}
+      {{arimaa-piece piece=piece}}
+    {{/each}}
+  </div>
 </div>
+{{#if caption}}
+  <div class="arimaa-position-caption">{{{caption}}}</div>
+{{/if}}
+

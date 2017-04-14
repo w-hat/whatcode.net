@@ -1,9 +1,12 @@
 import Ember from 'ember';
+import markdown from 'markdown-it';
 import { Piece, Position } from 'whatcode/utils/arimaa';
+
+const md = markdown({linkify: true});
 
 export default Ember.Component.extend({
   classNames: ['arimaa-position'],
-  classNameBindings: ['color'],
+  classNameBindings: ['color', 'float'],
   positional: [],
   params: {},
   block: '',
@@ -32,6 +35,24 @@ export default Ember.Component.extend({
       return false;
     }
     return (position.color ? 'silver' : 'gold');
+  }),
+  float: Ember.computed('params', function() {
+    const float = this.get('params').float;
+    if (float === 'left') {
+      return 'left';
+    } else if (float === 'right') {
+      return 'right';
+    } else {
+      return false;
+    }
+  }),
+  caption: Ember.computed('params', function() {
+    const caption = this.get('params').caption;
+    if (caption) {
+      return Ember.String.htmlSafe(md.render(caption));
+    } else {
+      return false;
+    }
   }),
 });
 
