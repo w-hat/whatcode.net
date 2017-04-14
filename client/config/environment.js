@@ -1,15 +1,7 @@
-/* jshint node: true */
+/* eslint-env node */
 
 module.exports = function(environment) {
   var ENV = {
-    whatSession: {
-      fields: { coder: 'sub' },
-      providers: {
-        facebook: { id: process.env.FACEBOOK_ID},
-        google:   { id: process.env.GOOGLE_ID},
-        github:   { id: process.env.GITHUB_ID},
-      }
-    },
     modulePrefix: 'whatcode',
     environment: environment,
     rootURL: '/',
@@ -51,7 +43,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.whatSession.redirect = 'http://www.whatcode.net';
+
   }
 
   return ENV;
