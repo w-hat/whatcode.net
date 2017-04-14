@@ -3,6 +3,7 @@ $szurke: #ddd;
 $blue: #6af;
 $glow: #ff8;
 $column-width: 800px;
+$piece_size: 40px;
 
 html, body, div, img {
   margin: 0;
@@ -220,3 +221,54 @@ footer {
   width: 100%;
   height: 100%;
 }
+
+.arimaa-position {
+  background-color: #999;
+  margin: 4px;
+  padding: 6px;
+  border: 1px solid;
+  border-color: #999;
+  width: 8 * $piece_size;
+  height: 8 * $piece_size;
+}
+
+.arimaa-position.gold {
+  background-color: #fff;
+}
+
+.arimaa-position.silver {
+  background-color: #000;
+}
+
+.arimaa-position-inner {
+  background-color: #ddd;
+  background-image: url(/images/arimaa-board.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 8 * $piece_size;
+  height: 8 * $piece_size;
+}
+
+.arimaa-piece {
+  width: $piece_size;
+  height: $piece_size;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  transition: margin 0.25s, transform 1s;
+  z-index: 30;
+}
+
+.gelephant { background-image: url(/images/arimaa/vector/w-elephant.svg); }
+.gcamel    { background-image: url(/images/arimaa/vector/w-camel.svg); }
+.ghorse    { background-image: url(/images/arimaa/vector/w-horse.svg); }
+.gdog      { background-image: url(/images/arimaa/vector/w-dog.svg); }
+.gcat      { background-image: url(/images/arimaa/vector/w-cat.svg); }
+.grabbit   { background-image: url(/images/arimaa/vector/w-rabbit.svg); }
+.selephant { background-image: url(/images/arimaa/vector/b-elephant.svg); }
+.scamel    { background-image: url(/images/arimaa/vector/b-camel.svg); }
+.shorse    { background-image: url(/images/arimaa/vector/b-horse.svg); }
+.sdog      { background-image: url(/images/arimaa/vector/b-dog.svg); }
+.scat      { background-image: url(/images/arimaa/vector/b-cat.svg); }
+.srabbit   { background-image: url(/images/arimaa/vector/b-rabbit.svg); }
+
