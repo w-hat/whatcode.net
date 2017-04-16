@@ -122,6 +122,8 @@ form {
   .content {
     font-size: 1.4em;
     a { color: #17f; }
+    p { min-width: 200px; }
+    h1, h2, h3, h4 { clear: both; }
   }
 }
 
@@ -184,6 +186,10 @@ footer {
   a { color: $szurke; }
 }
 
+.clear {
+  clear: both;
+}
+
 .auth-modal {
   position: fixed;
   z-index: 100;
@@ -224,34 +230,57 @@ footer {
 
 .arimaa-position {
   float: none;
-  background-color: #999;
-  margin: 4px;
+  background-color: #bbb;
+  margin: 5px;
+  margin-bottom: 20px;
   border: 1px solid;
-  border-color: #999;
-  width: 8 * $piece_size + 12px;
+  border-color: #aaa;
+  width: 8 * $piece_size + 27px;
 }
 
 .arimaa-position .color-wrapper {
   padding: 6px;
-  width: 8 * $piece_size;
+  width: 8 * $piece_size + 15;
 }
 
-.arimaa-position.gold .color-wrapper { background-color: #fff; }
-.arimaa-position.silver .color-wrapper { background-color: #000; }
+.arimaa-position.gold .color-wrapper { background-color: #db6; }
+.arimaa-position.silver .color-wrapper { background-color: #99c; }
+.arimaa-position.vector.gold .color-wrapper { background-color: #fff; }
+.arimaa-position.vector.silver .color-wrapper { background-color: #000; }
 .arimaa-position.left { float: left; }
 .arimaa-position.right { float: right; }
 
+@media screen and (max-width: 8 * $piece_size + 215px) {
+  .arimaa-position.left { float: none; }
+  .arimaa-position.right { float: none; }
+  .arimaa-position {
+    margin: 5px auto;
+  }
+}
+
 .arimaa-position-inner {
   background-color: #ddd;
-  background-image: url(/images/arimaa-board.svg);
+  background-image: url(/images/arimaa/classic/board.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  width: 8 * $piece_size;
-  height: 8 * $piece_size;
+  width: 8 * $piece_size + 15;
+  height: 8 * $piece_size + 15;
+}
+
+.arimaa-position .arimaa-position-inner:hover {
+  background-image: url(/images/arimaa/classic/board-traps.jpg);
+}
+
+.arimaa-position.vector .arimaa-position-inner {
+  background-image: url(/images/arimaa/vector/board.svg);
+}
+
+.arimaa-position.vector .arimaa-position-inner:hover {
+  background-image: url(/images/arimaa/vector/board.svg);
 }
 
 .arimaa-position-caption {
-  background-color: #ccc;
+  background-color: #ddd;
   margin: 4px;
   padding: 4px;
   font-size: 75%;
@@ -272,16 +301,33 @@ footer {
   transform: scale(1.15, 1.15);
 }
 
-.gelephant { background-image: url(/images/arimaa/vector/w-elephant.svg); }
-.gcamel    { background-image: url(/images/arimaa/vector/w-camel.svg); }
-.ghorse    { background-image: url(/images/arimaa/vector/w-horse.svg); }
-.gdog      { background-image: url(/images/arimaa/vector/w-dog.svg); }
-.gcat      { background-image: url(/images/arimaa/vector/w-cat.svg); }
-.grabbit   { background-image: url(/images/arimaa/vector/w-rabbit.svg); }
-.selephant { background-image: url(/images/arimaa/vector/b-elephant.svg); }
-.scamel    { background-image: url(/images/arimaa/vector/b-camel.svg); }
-.shorse    { background-image: url(/images/arimaa/vector/b-horse.svg); }
-.sdog      { background-image: url(/images/arimaa/vector/b-dog.svg); }
-.scat      { background-image: url(/images/arimaa/vector/b-cat.svg); }
-.srabbit   { background-image: url(/images/arimaa/vector/b-rabbit.svg); }
+.arimaa-position {
+  .gelephant { background-image: url('/images/arimaa/classic/gelephant.png'); }
+  .gcamel    { background-image: url('/images/arimaa/classic/gcamel.png'); }
+  .ghorse    { background-image: url('/images/arimaa/classic/ghorse.png'); }
+  .gdog      { background-image: url('/images/arimaa/classic/gdog.png'); }
+  .gcat      { background-image: url('/images/arimaa/classic/gcat.png'); }
+  .grabbit   { background-image: url('/images/arimaa/classic/grabbit.png'); }
+  .selephant { background-image: url('/images/arimaa/classic/selephant.png'); }
+  .scamel    { background-image: url('/images/arimaa/classic/scamel.png'); }
+  .shorse    { background-image: url('/images/arimaa/classic/shorse.png'); }
+  .sdog      { background-image: url('/images/arimaa/classic/sdog.png'); }
+  .scat      { background-image: url('/images/arimaa/classic/scat.png'); }
+  .srabbit   { background-image: url('/images/arimaa/classic/srabbit.png'); }
+}
+
+.arimaa-position.vector {
+  .gelephant { background-image: url('/images/arimaa/vector/w-elephant.svg'); }
+  .gcamel    { background-image: url('/images/arimaa/vector/w-camel.svg'); }
+  .ghorse    { background-image: url('/images/arimaa/vector/w-horse.svg'); }
+  .gdog      { background-image: url('/images/arimaa/vector/w-dog.svg'); }
+  .gcat      { background-image: url('/images/arimaa/vector/w-cat.svg'); }
+  .grabbit   { background-image: url('/images/arimaa/vector/w-rabbit.svg'); }
+  .selephant { background-image: url('/images/arimaa/vector/b-elephant.svg'); }
+  .scamel    { background-image: url('/images/arimaa/vector/b-camel.svg'); }
+  .shorse    { background-image: url('/images/arimaa/vector/b-horse.svg'); }
+  .sdog      { background-image: url('/images/arimaa/vector/b-dog.svg'); }
+  .scat      { background-image: url('/images/arimaa/vector/b-cat.svg'); }
+  .srabbit   { background-image: url('/images/arimaa/vector/b-rabbit.svg'); }
+}
 

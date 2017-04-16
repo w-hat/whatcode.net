@@ -1,7 +1,3 @@
 <h2 class="center">What Posts</h2>
 
-{{#each model as |post|}}
-  {{view-summary post=post}}
-{{else}}
-  <p>No posts.</p>
-{{/each}}
+{{view-summaries posts=model}}

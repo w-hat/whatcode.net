@@ -6,7 +6,7 @@ const md = markdown({linkify: true});
 
 export default Ember.Component.extend({
   classNames: ['arimaa-position'],
-  classNameBindings: ['color', 'float'],
+  classNameBindings: ['color', 'float', 'vector'],
   positional: [],
   params: {},
   block: '',
@@ -45,6 +45,9 @@ export default Ember.Component.extend({
     } else {
       return false;
     }
+  }),
+  vector: Ember.computed('params', function() {
+    return (this.get('params').vector ? 'vector' : false);
   }),
   caption: Ember.computed('params', function() {
     const caption = this.get('params').caption;
