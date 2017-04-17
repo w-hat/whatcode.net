@@ -1,7 +1,7 @@
 {
   "name": "whatcode",
   "version": "0.0.0",
-  "description": "Small description for whatcode goes here",
+  "description": "An Ember client for WhatCode.net.",
   "license": "MIT",
   "author": "",
   "directories": {
@@ -41,7 +41,7 @@
     "ember-resolver": "^2.0.3",
     "ember-source": "~2.12.0",
     "ember-welcome-page": "^2.0.2",
-    "ember-what-session": "0.0.5",
+    "ember-what-session": "0.0.6",
     "ember-whatbars": "0.2.1",
     "loader.js": "^4.2.3"
   },

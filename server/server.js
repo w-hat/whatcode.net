@@ -37,6 +37,26 @@ const Comment = mongoose.model('Comment', new Schema({
   content: String,
 }));
 
+const IdeaSchema = new Schema({
+  owner: {type: ObjectId, ref: 'Coder'},
+  parent: {type: ObjectId, ref: 'Idea'},
+  created: Date,
+  target: Date,
+  title: String,
+  body: String,
+  completed: Boolean,
+});
+
+IdeaSchema.methods.removeAll = async function() {
+  const cursor = Idea.find({parent: this}).cursor();
+  await cursor.eachAsync(async function(child) {
+    await child.removeAll();
+  });
+  this.remove();
+}
+
+const Idea = mongoose.model('Idea', IdeaSchema);
+
 const app = new Koa();
 app.use(require('koa-bodyparser')());
 const router = require('koa-router')({ prefix: '/s' });
@@ -57,14 +77,15 @@ router.get('/posts/:post_id', async ctx => {
 
 router.post('/posts', loadCoder, async ctx => {
   const data = ctx.request.body.post;
+  const path = data.path || data.title.replace(/\s+/g, '-').toLowerCase();
   const post = await Post.create({
     author: ctx.state.coder._id,
     comments: [],
     posted:   new Date(),
     content:  data.content,
-    path:     data.path,
     title:    data.title,
     image:    data.image,
+    path,
   });
   ctx.body = {post};
 });
@@ -86,20 +107,102 @@ router.get('/comments/:comment_id', async ctx => {
 
 router.post('/comments', loadCoder, async ctx => {
   const data = ctx.request.body.comment;
+  const post = data.post && await Post.findById(data.post);
+  if (!post) {
+    ctx.status = 404;
+    return;
+  }
   const comment = await Comment.create({
     author: ctx.state.coder._id,
     created: new Date(),
     content: data.content,
   });
-  const post = await Post.findById(data.post);
   post.comments.push(comment._id);
   post.save();
   ctx.body = {comment};
 });
 
+router.get('/ideas', loadCoder, async ctx => {
+  if (!ctx.state.coder) {
+    ctx.status = 401;
+    return;
+  }
+  const ideas = await Idea.find({owner: ctx.state.coder._id});
+  ctx.body = {ideas};
+});
+
+router.get('/ideas/:idea_id', loadCoder, async ctx => {
+  const idea = await Idea.findById(ctx.params.idea_id);
+  if (idea.owner.equals(ctx.state.coder._id)) {
+    ctx.body = {idea};
+  } else {
+    ctx.status = 401;
+  }
+});
+
+router.post('/ideas', loadCoder, async ctx => {
+  const data = ctx.request.body.idea;
+  const idea = await Idea.create({
+    owner: ctx.state.coder._id,
+    created: new Date(),
+    target: data.target,
+    parent: data.parent,
+    title: data.title,
+    body: data.body,
+    completed: false,
+  });
+  idea.save();
+  ctx.body = {idea};
+});
+
+router.put('/ideas/:idea_id', loadCoder, async ctx => {
+  const data = ctx.request.body.idea;
+  const idea = await Idea.findById(ctx.params.idea_id);
+  if (!idea.owner.equals(ctx.state.coder._id)) {
+    ctx.status = 401;
+    return;
+  }
+  idea.title = data.title;
+  idea.body = data.body;
+  idea.parent = data.parent;
+  idea.target = data.target;
+  idea.completed = data.completed;
+  idea.save();
+  ctx.body = { idea };
+});
+
+router.delete('/ideas/:idea_id', loadCoder, async ctx => {
+  const idea = await Idea.findById(ctx.params.idea_id);
+  if (!idea.owner.equals(ctx.state.coder._id)) {
+    ctx.status = 401;
+    return;
+  }
+  await idea.removeAll();
+  //idea.remove();
+  ctx.body = { idea };
+});
+
 router.get('/token', async ctx => {
-  const data = await whatauth.fetch(ctx.query);
-  const avatar = await fetchAvatar(data.image);
+  const token = await genToken(ctx.query);
+  ctx.body = { token };
+});
+
+async function loadCoder(ctx, next) {
+  const auth = ctx.header.authorization || ctx.header.auth;
+  if (!auth) {
+    ctx.status = 401;
+  } else {
+    console.log('AUTH IS:', auth, typeof auth);
+    const token = auth.split("Bearer ")[1];
+    const claims = await jwt.verifyAsync(token, config.jwt_secret);
+    ctx.state.coder = await Coder.findById(claims.sub);
+    await next();
+  }
+}
+
+async function genToken(query) {
+  const data = await whatauth.fetch(query);
+  const avatar = (data.image ? await fetchAvatar(data.image) : 'default.png');
   let coder = await Coder.findOne({idents: data.ident});
   if (coder) {
     if (!coder.emails.includes(data.email)) { coder.emails.push(data.email); }
@@ -114,22 +217,14 @@ router.get('/token', async ctx => {
       avatars: [avatar],
     });
   }
-  const token = jwt.sign({
+  return jwt.sign({
     sub: coder._id,
     can: coder.roles,
     exp: Math.floor(Date.now()/1000) + 28800,
   }, config.jwt_secret);
-  ctx.body = { token };
-});
-
-async function loadCoder(ctx, next) {
-  const token = ctx.header.authorization.split("Bearer ")[1];
-  const claims = await jwt.verifyAsync(token, config.jwt_secret);
-  ctx.state.coder = await Coder.findById(claims.sub);
-  await next();
 }
 
-function fetchAvatar(url) {
+async function fetchAvatar(url) {
   return new Promise(function(keep, braek) {
     const arg = "'"+url.replace(/\'/g,"'\''")+"'";
     exec("./fetch-avatar.sh " + arg, function(err, avatar, stderr) {
@@ -142,9 +237,9 @@ function fetchAvatar(url) {
 app.use(serve('./public'));
 app.use(serve('../client/dist'));
 app.use(router.routes());
-app.use(async ctx => {
-  await sendfile(ctx, '../client/dist/index.html');
-});
+app.use(async ctx => { await sendfile(ctx, '../client/dist/index.html'); });
 
+const server = app.listen(config.port);
+server.genToken = genToken;
 
-module.exports = app.listen(config.port);
+module.exports = server;

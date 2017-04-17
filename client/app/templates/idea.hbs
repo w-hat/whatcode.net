@@ -1,0 +1,20 @@
+{{#if session.coder}}
+  {{idea-settings}}
+  {{#if model}}
+    <h3>
+    {{#if model.parent}}
+      {{#link-to 'idea' model.parent}}
+        Parent: {{model.parent.title}}
+      {{/link-to}}
+    {{else}}
+      {{#link-to 'ideas'}}All Ideas{{/link-to}}
+    {{/if}}
+    </h3>
+    {{view-idea idea=model isExpanded=true}}
+  {{else}}
+    <p>No idea.</p>
+  {{/if}}
+
+{{else}}
+  <p>You must authenticate to view ideas.</p>
+{{/if}}

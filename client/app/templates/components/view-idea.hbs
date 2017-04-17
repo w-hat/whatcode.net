@@ -1,0 +1,24 @@
+<div class="top-line">
+  {{fa-icon "bars" title="Reorder"}}
+  {{fa-icon caret title="Expand" click=(action "toggleExpanded")}}
+  <span class="title">
+    {{#link-to 'idea' idea}}{{idea.title}}{{/link-to}}
+  </span>
+  {{fa-icon "close" class="red float-right" title="Delete" click=(action "deleteIdea")}}
+  {{fa-icon "pencil" class="blue float-right" title="Edit" click=(action "toggleEditing")}}
+  {{fa-icon check class="green float-right" title=checkText click=(action "toggleCompleted")}}
+</div>
+{{#if isExpanded}}
+  {{#if isEditing}}
+    {{edit-idea idea=idea callback=(action "toggleEditing")}}
+  {{else}}
+    <div class="body">
+      {{what-bars idea.body enabled sanitizer}}
+      <div class="clear"></div>
+    </div>
+  {{/if}}
+  {{add-idea parent=idea class="indented"}}
+  {{#each showIdeas as |child|}}
+    {{view-idea idea=child class="indented"}}
+  {{/each}}
+{{/if}}

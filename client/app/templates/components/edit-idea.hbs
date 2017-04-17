@@ -1,0 +1,11 @@
+<form class="idea-form">
+  <div><label>Title: </label> {{input value=idea.title}}</div>
+  {{#if idea.parent}}
+  <div><label>Parent:  </label> {{idea.parent.title}}</div>
+  {{else}}
+  <div><label>Top level idea.</label></div>
+  {{/if}}
+  <label for='content'>Body:</label>
+  {{textarea value=idea.body autoresize=true rows=4 max-rows=16}}
+  <button type="submit" {{action "save"}}>Save</button>
+</form>

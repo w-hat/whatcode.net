@@ -1,0 +1,7 @@
+<h1 class="center">What Ideas</h1>
+
+{{#if session.coder}}
+  {{view-ideas ideas=model}}
+{{else}}
+  <p>You must authenticate to record ideas.</p>
+{{/if}}

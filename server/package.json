@@ -30,6 +30,6 @@
     "koa-sendfile": "^2.0.0",
     "koa-static": "^3.0.0",
     "mongoose": "^4.8.2",
-    "whatauth": "0.0.3"
+    "whatauth": "0.0.4"
   }
 }

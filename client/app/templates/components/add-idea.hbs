@@ -1,0 +1,7 @@
+{{#if isOpen}}
+  {{fa-icon "square" click=(action "toggleOpen") class="orange" title="Cancel"}}
+  {{edit-idea idea=idea callback=(action "clearIdea")}}
+{{else}}
+  {{fa-icon "plus-square" click=(action "toggleOpen") class="green" title="Add idea"}}
+{{/if}}
+

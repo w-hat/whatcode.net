@@ -1,14 +1,30 @@
 import {ObjectID} from 'bson';
 
 const ADMIN_ID  = new ObjectID();
+const PINKY_ID  = new ObjectID();
+const BRAIN_ID  = new ObjectID();
 
 const Coder = [{
   _id: ADMIN_ID,
   display: "Ad Minima",
-  emails:  ['admin@exmaple.com'],
-  idents:  ['testauth-123'],
+  emails:  ['admin@example.com'],
+  idents:  ['testauth:admin'],
   avatars: ['/assets/passed.png'],
   roles:   ['admin', 'comment'],
+}, {
+  _id: PINKY_ID,
+  display: "Pinky",
+  emails:  ['pinky@example.com'],
+  idents:  ['testauth:pinky'],
+  avatars: ['/assets/passed.png'],
+  roles:   ['comment'],
+}, {
+  _id: BRAIN_ID,
+  display: "The Brain",
+  emails:  ['brain@example.com'],
+  idents:  ['testauth:brain'],
+  avatars: ['/assets/passed.png'],
+  roles:   ['comment'],
 }];
 
 const Comment = [{
@@ -50,4 +66,22 @@ Plus, they both have small hands and both look like thieves.`,
   path: 'america',
 }];
 
-export default {Coder, Comment, Post};
+const Idea = [{
+  _id: new ObjectID(),
+  owner: PINKY_ID,
+  created: new Date("April 16, 2017"),
+  target: null,
+  title: "Narf",
+  body: "I think so, Brain.",
+  completed: false,
+}, {
+  _id: new ObjectID(),
+  owner: BRAIN_ID,
+  created: new Date("April 16, 2017"),
+  target: new Date("April 16, 2018"),
+  title: "Take over the world",
+  body: "Escape this cage and take over the world.",
+  completed: false,
+}];
+
+export default {Coder, Comment, Post, Idea};

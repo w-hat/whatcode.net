@@ -11,6 +11,12 @@ html, body, div, img {
   font-family: monospace;
 }
 
+.red { color: #e00; }
+.yellow { color: #ee0; }
+.orange { color: #f60; }
+.green { color: #0e0; }
+.blue { color: #00e; }
+
 a {
   text-decoration: none;
   color: $fekete;
@@ -112,6 +118,9 @@ form {
   max-width: $column-width;
   
   .center { text-align: center; }
+  a:hover {
+    color: $blue;
+  }
 }
 
 .view-post {
@@ -329,5 +338,68 @@ footer {
   .sdog      { background-image: url('/images/arimaa/vector/b-dog.svg'); }
   .scat      { background-image: url('/images/arimaa/vector/b-cat.svg'); }
   .srabbit   { background-image: url('/images/arimaa/vector/b-rabbit.svg'); }
+}
+
+.add-idea i.fa {
+  font-size: 2em;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.add-idea.indented {
+  margin-left: 30px;
+}
+
+.view-idea {
+  padding: 1px;
+  .top-line {
+    background-color: #eee;
+  }
+  .title {
+    font-weight: bold;
+  }
+  .body {
+    margin-left: 50px;
+  }
+  i.fa {
+    cursor: pointer;
+    font-size: 1.5em;
+    padding: 4px;
+  }
+  i.fa-bars {
+    cursor: grab;
+  }
+  i.float-right {
+    float: right;
+  }
+  i.fa:hover {
+    text-shadow: 0px 0px 5px #111;
+  }
+  a { color: #006; }
+}
+
+.view-idea.indented {
+  margin-left: 30px;
+}
+
+.view-idea.completed > .top-line {
+  background-color: #dfd;
+}
+
+.idea-settings {
+  padding: 5px;
+  background-color: #eee;
+  i.fa {
+    cursor: pointer;
+    font-size: 1.5em;
+    padding: 4px;
+  }
+  i.fa:hover {
+    text-shadow: 0px 0px 5px #111;
+  }
+}
+
+img[alt=width100] {
+  width: 100px;
 }
 
