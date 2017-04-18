@@ -7,6 +7,10 @@
   {{fa-icon "close" class="red float-right" title="Delete" click=(action "deleteIdea")}}
   {{fa-icon "pencil" class="blue float-right" title="Edit" click=(action "toggleEditing")}}
   {{fa-icon check class="green float-right" title=checkText click=(action "toggleCompleted")}}
+{{#if idea.completed}}
+{{else}}
+  {{fa-icon "exclamation" class="orange float-right" title="Toggle importance" click=(action "toggleImportant")}}
+{{/if}}
 </div>
 {{#if isExpanded}}
   {{#if isEditing}}

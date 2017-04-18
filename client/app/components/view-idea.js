@@ -6,7 +6,7 @@ const md = markdown({linkify: true});
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   classNames: ['view-idea'],
-  classNameBindings: ['idea.completed'],
+  classNameBindings: ['idea.completed', 'idea.important'],
   idea: null,
   isExpanded: false,
   isEditing: false,
@@ -51,8 +51,14 @@ export default Ember.Component.extend({
       this.set('isExpanded', true);
       this.toggleProperty('isEditing');
     },
+    toggleImportant() {
+      this.toggleProperty('idea.important');
+      this.get('idea').save();
+    },
     startDrag() {
-      // TODO
+      this.set('isExpanded', false);
+      // TODO Drag.
+      // TODO Save after drag somehow.
     },
   },
 });

@@ -45,6 +45,7 @@ const IdeaSchema = new Schema({
   title: String,
   body: String,
   completed: Boolean,
+  important: Boolean,
 });
 
 IdeaSchema.methods.removeAll = async function() {
@@ -63,10 +64,10 @@ const router = require('koa-router')({ prefix: '/s' });
 
 router.get('/posts', async ctx => {
   if (ctx.query && ctx.query.path) {
-    const post = await Post.findOne({'path': ctx.query.path});
+    const post = await Post.findOne({'path': ctx.query.path}).lean();
     ctx.body = {post};
   } else {
-    const posts = await Post.find();
+    const posts = await Post.find().lean();
     ctx.body = {posts};
   }
 });
@@ -127,13 +128,15 @@ router.get('/ideas', loadCoder, async ctx => {
     ctx.status = 401;
     return;
   }
-  const ideas = await Idea.find({owner: ctx.state.coder._id});
+  const ideas = await Idea.find({owner: ctx.state.coder._id}).lean();
   ctx.body = {ideas};
 });
 
 router.get('/ideas/:idea_id', loadCoder, async ctx => {
-  const idea = await Idea.findById(ctx.params.idea_id);
+  const idea = await Idea.findById(ctx.params.idea_id).lean();
   if (idea.owner.equals(ctx.state.coder._id)) {
+    const children = await Idea.find({parent: idea}).select('id').lean();
+    idea.children = children.map(obj => obj._id);
     ctx.body = {idea};
   } else {
     ctx.status = 401;
@@ -150,6 +153,7 @@ router.post('/ideas', loadCoder, async ctx => {
     title: data.title,
     body: data.body,
     completed: false,
+    important: false,
   });
   idea.save();
   ctx.body = {idea};
@@ -157,6 +161,7 @@ router.post('/ideas', loadCoder, async ctx => {
 
 router.put('/ideas/:idea_id', loadCoder, async ctx => {
   const data = ctx.request.body.idea;
+  console.log('updating idea', data);
   const idea = await Idea.findById(ctx.params.idea_id);
   if (!idea.owner.equals(ctx.state.coder._id)) {
     ctx.status = 401;
@@ -167,6 +172,7 @@ router.put('/ideas/:idea_id', loadCoder, async ctx => {
   idea.parent = data.parent;
   idea.target = data.target;
   idea.completed = data.completed;
+  idea.important = data.important && (!data.completed);
   idea.save();
   ctx.body = { idea };
 });
@@ -178,7 +184,6 @@ router.delete('/ideas/:idea_id', loadCoder, async ctx => {
     return;
   }
   await idea.removeAll();
-  //idea.remove();
   ctx.body = { idea };
 });
 
@@ -192,7 +197,6 @@ async function loadCoder(ctx, next) {
   if (!auth) {
     ctx.status = 401;
   } else {
-    console.log('AUTH IS:', auth, typeof auth);
     const token = auth.split("Bearer ")[1];
     const claims = await jwt.verifyAsync(token, config.jwt_secret);
     ctx.state.coder = await Coder.findById(claims.sub);

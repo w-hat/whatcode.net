@@ -118,9 +118,6 @@ form {
   max-width: $column-width;
   
   .center { text-align: center; }
-  a:hover {
-    color: $blue;
-  }
 }
 
 .view-post {
@@ -133,6 +130,9 @@ form {
     a { color: #17f; }
     p { min-width: 200px; }
     h1, h2, h3, h4 { clear: both; }
+    a:hover {
+      color: $blue;
+    }
   }
 }
 
@@ -340,10 +340,15 @@ footer {
   .srabbit   { background-image: url('/images/arimaa/vector/b-rabbit.svg'); }
 }
 
-.add-idea i.fa {
-  font-size: 2em;
-  cursor: pointer;
-  padding: 4px;
+.add-idea {
+  i.fa {
+    font-size: 2em;
+    cursor: pointer;
+    padding: 4px;
+  }
+  i.fa:hover {
+    text-shadow: 0px 0px 5px #111;
+  }
 }
 
 .add-idea.indented {
@@ -376,10 +381,17 @@ footer {
     text-shadow: 0px 0px 5px #111;
   }
   a { color: #006; }
+  a:hover {
+    color: $blue;
+  }
 }
 
 .view-idea.indented {
   margin-left: 30px;
+}
+
+.view-idea.important > .top-line {
+  background-color: #fca;
 }
 
 .view-idea.completed > .top-line {

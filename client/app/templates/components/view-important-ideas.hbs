@@ -1,0 +1,7 @@
+{{#if importantIdeas}}
+  <h1 class="center">Short List</h1>
+  {{#each importantIdeas as |idea|}}
+    {{view-idea idea=idea}}
+  {{/each}}
+{{/if}}
+

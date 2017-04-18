@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   ideas: [],
   ideaSorting: ['created'],
+  classNames: ['view-ideas'],
   rootIdeas: Ember.computed.filter('ideas', (idea) => {
     return !idea.get('parent');
   }),
