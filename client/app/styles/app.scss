@@ -155,6 +155,17 @@ form {
     padding: 5px;
     width: 100%;
   }
+  .author {
+    padding: 2px;
+    font-weight: bold;
+    float: left;
+  }
+  .time {
+    padding: 2px;
+    font-size: 80%;
+    float: right;
+    white-space: nowrap;
+  }
   .content {
     padding: 8px;
     a { color: #17f; }
@@ -210,11 +221,14 @@ footer {
   background-color: rgba(0,0,0,0.75);
   text-align: center;
   padding: 150px 0px;
+  .auth-modal-inner {
+    white-space: nowrap;
+  }
   a {
     background-color: #fff;
     padding: 10px;
     border-radius: 10px;
-    margin: 25px;
+    margin: 15px;
     cursor: pointer;
     font-size: 5em;
   }
@@ -360,22 +374,25 @@ footer {
   .top-line {
     background-color: #eee;
   }
+  .top-line:hover {
+    background-color: #f7f7f7;
+  }
   .title {
     font-weight: bold;
   }
   .body {
     margin-left: 50px;
   }
+  .float-right {
+    float: right;
+  }
   i.fa {
     cursor: pointer;
     font-size: 1.5em;
-    padding: 4px;
+    padding: 2px;
   }
   i.fa-bars {
     cursor: grab;
-  }
-  i.float-right {
-    float: right;
   }
   i.fa:hover {
     text-shadow: 0px 0px 5px #111;
@@ -394,8 +411,23 @@ footer {
   background-color: #fca;
 }
 
+.view-idea.important > .top-line:hover {
+  background-color: #fdb;
+}
+
 .view-idea.completed > .top-line {
+  background-color: #cfc;
+}
+
+.view-idea.completed > .top-line:hover {
   background-color: #dfd;
+}
+
+.idea-parent {
+  a { color: #006; }
+  a:hover {
+    color: $blue;
+  }
 }
 
 .idea-settings {

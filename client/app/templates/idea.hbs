@@ -1,9 +1,9 @@
 {{#if session.coder}}
   {{idea-settings}}
   {{#if model}}
-    <h3>
+    <h3 class="idea-parent">
     {{#if model.parent}}
-      {{#link-to 'idea' model.parent}}
+      {{#link-to 'idea' model.parent.id}}
         Parent: {{model.parent.title}}
       {{/link-to}}
     {{else}}

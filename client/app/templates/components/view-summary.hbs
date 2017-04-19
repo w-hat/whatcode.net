@@ -1,10 +1,10 @@
-{{#link-to 'post' post}}
+{{#link-to 'post' post.id}}
 <img class="thumb" src="{{post.image}}">
 {{/link-to}}
 <div class="description">
   {{#link-to 'post' post}}
   <h2>{{post.title}}</h2>
   {{/link-to}}
-  <p>{{post.posted}}</p>
-  <p>{{post.author.display}}</p>
+  <p class="time">{{post.posted}}</p>
+  <p class="author">{{post.author.display}}</p>
 </div>

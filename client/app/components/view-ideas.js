@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   ideaSorting: ['created'],
   classNames: ['view-ideas'],
   rootIdeas: Ember.computed.filter('ideas', (idea) => {
-    return !idea.get('parent');
+    return !idea.get('parent.id');
   }),
   sortedRootIdeas: Ember.computed.sort('rootIdeas', 'ideaSorting'),
   showIdeas: Ember.computed('sortedRootIdeas.@each.completed',

@@ -17,7 +17,7 @@
   <div class="center-column">
     {{#if session.coder}}
     <div class="item">
-      <a {{action session.deauthenticate}}>Deauthenticate</a>
+      <a {{action session.deauthenticate true}}>Deauthenticate</a>
     </div>
     <div class="item">
       <img src="{{session.coder.avatar}}">
@@ -38,9 +38,11 @@
 
 {{#if showModal}}
 <div class='auth-modal' {{action 'showModal' false}}>
-  <a {{action session.authenticate 'facebook'}}>{{fa-icon "facebook-square"}}</a>
-  <a {{action session.authenticate 'google'}}>{{fa-icon "google-plus-square"}}</a>
-  <a {{action session.authenticate 'github'}}>{{fa-icon "github-square"}}</a>
+  <div class="auth-modal-inner">
+    <a {{action session.authenticate 'facebook' null true}}>{{fa-icon "facebook-square"}}</a>
+    <a {{action session.authenticate 'google' null true}}>{{fa-icon "google-plus-square"}}</a>
+    <a {{action session.authenticate 'github' null true}}>{{fa-icon "github-square"}}</a>
+  </div>
 </div>
 {{/if}}
 

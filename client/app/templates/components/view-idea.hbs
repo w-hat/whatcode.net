@@ -2,15 +2,18 @@
   {{fa-icon "bars" title="Reorder"}}
   {{fa-icon caret title="Expand" click=(action "toggleExpanded")}}
   <span class="title">
-    {{#link-to 'idea' idea}}{{idea.title}}{{/link-to}}
+    {{#link-to 'idea' idea.id}}{{idea.title}}{{/link-to}}
   </span>
-  {{fa-icon "close" class="red float-right" title="Delete" click=(action "deleteIdea")}}
-  {{fa-icon "pencil" class="blue float-right" title="Edit" click=(action "toggleEditing")}}
-  {{fa-icon check class="green float-right" title=checkText click=(action "toggleCompleted")}}
-{{#if idea.completed}}
-{{else}}
-  {{fa-icon "exclamation" class="orange float-right" title="Toggle importance" click=(action "toggleImportant")}}
-{{/if}}
+  <span class="float-right">
+    {{#if idea.completed}}
+    {{else}}
+      {{fa-icon "exclamation" class="orange" title="Toggle importance" click=(action "toggleImportant")}}
+    {{/if}}
+    {{fa-icon check class="green" title=checkText click=(action "toggleCompleted")}}
+    {{fa-icon "pencil" class="blue" title="Edit" click=(action "toggleEditing")}}
+    {{fa-icon "close" class="red" title="Delete" click=(action "deleteIdea")}}
+  </span>
+  <div class="clear"></div>
 </div>
 {{#if isExpanded}}
   {{#if isEditing}}

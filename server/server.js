@@ -137,6 +137,7 @@ router.get('/ideas/:idea_id', loadCoder, async ctx => {
   if (idea.owner.equals(ctx.state.coder._id)) {
     const children = await Idea.find({parent: idea}).select('id').lean();
     idea.children = children.map(obj => obj._id);
+    console.log('IDAL', idea);
     ctx.body = {idea};
   } else {
     ctx.status = 401;
@@ -161,7 +162,6 @@ router.post('/ideas', loadCoder, async ctx => {
 
 router.put('/ideas/:idea_id', loadCoder, async ctx => {
   const data = ctx.request.body.idea;
-  console.log('updating idea', data);
   const idea = await Idea.findById(ctx.params.idea_id);
   if (!idea.owner.equals(ctx.state.coder._id)) {
     ctx.status = 401;

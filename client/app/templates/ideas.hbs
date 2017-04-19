@@ -1,10 +1,8 @@
 {{idea-settings}}
 
-{{view-important-ideas ideas=model}}
-
-<h1 class="center">All Ideas</h1>
-
 {{#if session.coder}}
+  {{view-important-ideas ideas=model}}
+  <h1 class="center">All Ideas</h1>
   {{view-ideas ideas=model}}
 {{else}}
   <p>You must authenticate to record ideas.</p>

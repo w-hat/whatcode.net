@@ -2,7 +2,7 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   owner: DS.belongsTo('coder'),
-  parent: DS.belongsTo('idea', { inverse: 'children', async: false }),
+  parent: DS.belongsTo('idea', { inverse: 'children', async: true }),
   children: DS.hasMany('idea', { inverse: 'parent', async: true }),
   created: DS.attr('date'),
   target: DS.attr('date'),
