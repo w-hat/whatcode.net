@@ -73,7 +73,9 @@ const Idea = [{
   target: null,
   title: "Narf",
   body: "I think so, Brain.",
-  completed: false,
+  completed: null,
+  placement: 100,
+  importance: 0,
 }, {
   _id: new ObjectID(),
   owner: BRAIN_ID,
@@ -81,7 +83,9 @@ const Idea = [{
   target: new Date("April 16, 2018"),
   title: "Take over the world",
   body: "Escape this cage and take over the world.",
-  completed: false,
+  completed: null,
+  placement: 200,
+  importance: 3000,
 }];
 
 export default {Coder, Comment, Post, Idea};

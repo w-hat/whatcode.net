@@ -44,9 +44,10 @@ const IdeaSchema = new Schema({
   target: Date,
   title: String,
   body: String,
-  completed: Boolean,
-  important: Boolean,
+  completed: Date,
+  deadline: Date,
   placement: Number,
+  importance: Number,
 });
 
 IdeaSchema.methods.removeAll = async function() {
@@ -154,8 +155,9 @@ router.post('/ideas', loadCoder, async ctx => {
     parent: data.parent,
     title: data.title,
     body: data.body,
-    completed: false,
-    important: false,
+    completed: null,
+    deadline: null,
+    importance: 0,
     placement: Date.now(),
   });
   idea.save();
@@ -174,7 +176,8 @@ router.put('/ideas/:idea_id', loadCoder, async ctx => {
   idea.parent = data.parent;
   idea.target = data.target;
   idea.completed = data.completed;
-  idea.important = data.important && (!data.completed);
+  idea.deadline = data.deadline;
+  idea.importance = (!data.completed) && data.importance;
   idea.placement = data.placement || (idea.created && idea.created.getTime());
   idea.save();
   ctx.body = { idea };

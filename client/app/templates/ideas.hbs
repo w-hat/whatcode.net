@@ -3,7 +3,7 @@
 {{#if session.coder}}
   {{#if importantIdeas}}
     <h1 class="center">Short List ({{importantIdeas.length}})</h1>
-    {{view-ideas ideas=importantIdeas}}
+    {{view-ideas ideas=importantIdeas parent='short-list'}}
   {{/if}}
   <h1 class="center">All Ideas</h1>
   {{add-idea}}

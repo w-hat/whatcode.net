@@ -1,4 +1,5 @@
 {{#each sortedIdeas as |idea|}}
-  {{view-idea idea=idea}}
+  {{view-idea idea=idea dragIdea=(action 'dragIdea')}}
 {{/each}}
-<!-- TODO Drag at end. -->
+{{#draggable-object-target dragOverAction=(action 'dragIdea' null) class="idea-drag-target spacer"}}
+{{/draggable-object-target}}

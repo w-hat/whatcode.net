@@ -8,9 +8,10 @@ export default DS.Model.extend({
   target: DS.attr('date'),
   title: DS.attr(),
   body: DS.attr(),
-  completed: DS.attr('boolean', { defaultValue: false }),
-  important: DS.attr('boolean', { defaultValue: false }),
+  completed: DS.attr('date'),
+  deadline: DS.attr('date'),
   placement: DS.attr(),
+  importance: DS.attr('number', { defaultValue: 0 }),
   deleteAll() {
     this.get('children').forEach(child => { child.deleteAll(); });
     this.destroyRecord();

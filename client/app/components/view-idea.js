@@ -6,12 +6,11 @@ const md = markdown({linkify: true});
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   classNames: ['view-idea'],
-  classNameBindings: ['idea.completed', 'idea.important'],
+  classNameBindings: ['idea.completed:completed', 'idea.importance:important'],
   idea: null,
-  isExpanded: false,
   isEditing: false,
-  caret: Ember.computed('isExpanded', function() {
-    return (this.get('isExpanded') ? 'caret-down' : 'caret-right');
+  caret: Ember.computed('idea.isExpanded', function() {
+    return (this.get('idea.isExpanded') ? 'caret-down' : 'caret-right');
   }),
   check: Ember.computed('idea.completed', function() {
     return (this.get('idea.completed') ? "undo" : "check");
@@ -19,46 +18,40 @@ export default Ember.Component.extend({
   checkText: Ember.computed('idea.completed', function() {
     return (this.get('idea.completed') ? "Mark uncompleted" : "Mark completed");
   }),
-  children: Ember.computed('idea', function() {
-    const idea = this.get('idea');
-    return (idea ? idea.get('children') : []);
-  }),
-  showIdeas: Ember.computed('children.@each.completed',
-                            'session.showCompletedIdeas', function() {
-    const children = this.get('children');
-    if (this.get('session.showCompletedIdeas')) {
-      return children;
-    } else {
-      return children.rejectBy('completed');
-    }
-  }),
   enabled: ['youtube-video', 'arimaa-position'],
   sanitizer(s) {
     return Ember.String.htmlSafe(md.render(s));
   },
+  dragIdea() {},
   actions: {
     toggleExpanded() {
-      this.toggleProperty('isExpanded');
+      this.toggleProperty('idea.isExpanded');
     },
     deleteIdea() {
       this.get('idea').deleteAll();
     },
     toggleCompleted() {
-      this.toggleProperty('idea.completed');
-      this.get('idea').save();
+      const idea = this.get('idea');
+      idea.set('completed', (idea.get('completed') ? null : new Date()));
+      idea.save();
     },
     toggleEditing() {
-      this.set('isExpanded', true);
+      this.set('idea.isExpanded', true);
       this.toggleProperty('isEditing');
     },
     toggleImportant() {
-      this.toggleProperty('idea.important');
+      this.set('idea.importance', this.get('idea.importance') ? 0 : Date.now());
       this.get('idea').save();
     },
     startDrag() {
-      this.set('isExpanded', false);
-      // TODO Drag.
-      // TODO Save after drag somehow.
+      this.set('idea.isExpanded', false);
+      this.set('session.draggingIdea', this.get('idea'));
+    },
+    endDrag() {
+      this.set('session.draggingIdea', null);
+    },
+    dragOver() {
+      this.get('dragIdea')(this.get('idea'));
     },
   },
 });
