@@ -24,8 +24,8 @@
       <div class="clear"></div>
     </div>
   {{/if}}
-  {{add-idea parent=idea class="indented"}}
-  {{#each showIdeas as |child|}}
-    {{view-idea idea=child class="indented"}}
-  {{/each}}
+  <div class="indented">
+    {{add-idea parent=idea}}
+    {{view-ideas ideas=idea.children}}
+  </div>
 {{/if}}

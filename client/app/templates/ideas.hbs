@@ -1,9 +1,23 @@
 {{idea-settings}}
 
 {{#if session.coder}}
-  {{view-important-ideas ideas=model}}
+  {{#if importantIdeas}}
+    <h1 class="center">Short List ({{importantIdeas.length}})</h1>
+    {{view-ideas ideas=importantIdeas}}
+  {{/if}}
   <h1 class="center">All Ideas</h1>
-  {{view-ideas ideas=model}}
+  {{add-idea}}
+  {{#if rootIdeas}}
+    {{view-ideas ideas=rootIdeas}}
+  {{else}}
+    {{#if ideas.length}}
+      <p>All of your ideas are completed!</p>
+    {{else}}
+      <p>You have not recorded any ideas yet.</p>
+    {{/if}}
+  {{/if}}
+  <hr />
+  <p>Note: This list of ideas is only visible to you.</p>
 {{else}}
   <p>You must authenticate to record ideas.</p>
 {{/if}}

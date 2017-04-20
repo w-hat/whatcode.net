@@ -46,6 +46,7 @@ const IdeaSchema = new Schema({
   body: String,
   completed: Boolean,
   important: Boolean,
+  placement: Number,
 });
 
 IdeaSchema.methods.removeAll = async function() {
@@ -155,6 +156,7 @@ router.post('/ideas', loadCoder, async ctx => {
     body: data.body,
     completed: false,
     important: false,
+    placement: Date.now(),
   });
   idea.save();
   ctx.body = {idea};
@@ -173,6 +175,7 @@ router.put('/ideas/:idea_id', loadCoder, async ctx => {
   idea.target = data.target;
   idea.completed = data.completed;
   idea.important = data.important && (!data.completed);
+  idea.placement = data.placement || (idea.created && idea.created.getTime());
   idea.save();
   ctx.body = { idea };
 });

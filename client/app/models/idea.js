@@ -10,6 +10,7 @@ export default DS.Model.extend({
   body: DS.attr(),
   completed: DS.attr('boolean', { defaultValue: false }),
   important: DS.attr('boolean', { defaultValue: false }),
+  placement: DS.attr(),
   deleteAll() {
     this.get('children').forEach(child => { child.deleteAll(); });
     this.destroyRecord();

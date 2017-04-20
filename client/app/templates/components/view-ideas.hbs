@@ -1,16 +1,4 @@
-{{add-idea}}
-
-{{#each showIdeas as |idea|}}
+{{#each sortedIdeas as |idea|}}
   {{view-idea idea=idea}}
-{{else}}
-  {{#if ideas.length}}
-    <p>All of your ideas are completed!</p>
-  {{else}}
-    <p>You have not recorded any ideas yet.</p>
-  {{/if}}
 {{/each}}
-
-<hr />
-
-<p>Note: This list of ideas is only visible to you.</p>
-
+<!-- TODO Drag at end. -->

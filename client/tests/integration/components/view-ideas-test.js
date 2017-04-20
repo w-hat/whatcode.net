@@ -12,5 +12,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{view-ideas}}`);
 
-  assert.ok(this.$().text().match('ideas yet'));
+  assert.equal(this.$().text().trim(), '');
 });

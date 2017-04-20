@@ -365,10 +365,6 @@ footer {
   }
 }
 
-.add-idea.indented {
-  margin-left: 30px;
-}
-
 .view-idea {
   padding: 1px;
   .top-line {
@@ -382,6 +378,9 @@ footer {
   }
   .body {
     margin-left: 50px;
+  }
+  .indented {
+    margin-left: 30px;
   }
   .float-right {
     float: right;
@@ -401,10 +400,6 @@ footer {
   a:hover {
     color: $blue;
   }
-}
-
-.view-idea.indented {
-  margin-left: 30px;
 }
 
 .view-idea.important > .top-line {
