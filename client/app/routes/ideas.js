@@ -6,5 +6,6 @@ export default Ember.Route.extend({
       return [];
     });
   },
+  titleToken: 'Ideas',
 });
 

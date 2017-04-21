@@ -1,5 +1,14 @@
 <form class="idea-form">
-  <div><label>Title: </label> {{input value=idea.title}}</div>
+  <div class="edit-title-deadline">
+    <div class="edit-title">
+      <label>Title:</label>
+      {{input value=idea.title}}
+    </div>
+    <div class="edit-deadline">
+      <label>Due date:</label>
+      {{pikaday-input value=idea.deadline onSelection=(action 'setDeadline') format="YYYY-MM-DD"}}
+    </div>
+  </div>
   {{#if idea.parent}}
   <div><label>Parent:  </label> {{idea.parent.title}}</div>
   {{else}}
@@ -9,3 +18,4 @@
   {{textarea value=idea.body autoresize=true rows=4 max-rows=16}}
   <button type="submit" {{action "save"}}>Save</button>
 </form>
+

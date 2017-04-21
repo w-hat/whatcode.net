@@ -16,10 +16,15 @@
   </span>
   <div class="clear"></div>
 {{/draggable-object}}
-{{#if idea.isExpanded}}
+{{#if isExpanded}}
   {{#if isEditing}}
     {{edit-idea idea=idea callback=(action "toggleEditing")}}
   {{else}}
+    {{#if idea.deadline}}
+      {{#link-to 'ideas-calendar' date}}
+        <span class="deadline">Due date: {{moment-format idea.deadline 'YYYY-MM-DD'}}</span>
+      {{/link-to}}
+    {{/if}}
     {{what-bars idea.body enabled sanitizer class="body"}}
     <div class="clear"></div>
   {{/if}}

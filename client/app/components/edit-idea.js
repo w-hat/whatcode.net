@@ -14,6 +14,9 @@ export default Ember.Component.extend({
         this.get('store').createRecord('idea', idea).save();
       }
       this.get('callback')();
-    }
+    },
+    setDeadline(date) {
+      this.set('idea.deadline', date);
+    },
   }
 });

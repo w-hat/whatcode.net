@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 import markdown from 'markdown-it';
 
 const md = markdown({linkify: true});
@@ -9,8 +10,8 @@ export default Ember.Component.extend({
   classNameBindings: ['idea.completed:completed', 'idea.importance:important'],
   idea: null,
   isEditing: false,
-  caret: Ember.computed('idea.isExpanded', function() {
-    return (this.get('idea.isExpanded') ? 'caret-down' : 'caret-right');
+  caret: Ember.computed('isExpanded', function() {
+    return (this.get('isExpanded') ? 'caret-down' : 'caret-right');
   }),
   check: Ember.computed('idea.completed', function() {
     return (this.get('idea.completed') ? "undo" : "check");
@@ -18,14 +19,23 @@ export default Ember.Component.extend({
   checkText: Ember.computed('idea.completed', function() {
     return (this.get('idea.completed') ? "Mark uncompleted" : "Mark completed");
   }),
+  isExpanded: false,
+  unexpand: Ember.observer('idea.isExpanded', function() {
+    if (!this.get('idea.isExpanded')) { this.set('isExpanded', false); }
+  }),
   enabled: ['youtube-video', 'arimaa-position'],
   sanitizer(s) {
     return Ember.String.htmlSafe(md.render(s));
   },
+  date: Ember.computed('idea.deadline', function() {
+    const deadline = this.get('idea.deadline');
+    return moment(deadline).format('YYYY-MM-DD');
+  }),
   dragIdea() {},
   actions: {
     toggleExpanded() {
-      this.toggleProperty('idea.isExpanded');
+      this.toggleProperty('isExpanded');
+      if (this.get('isExpanded')) { this.set('idea.isExpanded', true); }
     },
     deleteIdea() {
       this.get('idea').deleteAll();
@@ -36,7 +46,7 @@ export default Ember.Component.extend({
       idea.save();
     },
     toggleEditing() {
-      this.set('idea.isExpanded', true);
+      this.set('isExpanded', true);
       this.toggleProperty('isEditing');
     },
     toggleImportant() {
@@ -44,6 +54,7 @@ export default Ember.Component.extend({
       this.get('idea').save();
     },
     startDrag() {
+      this.set('isExpanded', false);
       this.set('idea.isExpanded', false);
       this.set('session.draggingIdea', this.get('idea'));
     },

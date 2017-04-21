@@ -6,4 +6,7 @@ export default Ember.Route.extend({
       return null;
     });
   },
+  titleToken(model) {
+    return (model ? model.get('title') + ' - Ideas' : 'Ideas');
+  },
 });
