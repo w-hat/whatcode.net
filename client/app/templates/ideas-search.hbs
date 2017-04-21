@@ -1,0 +1,12 @@
+{{idea-settings}}
+
+<h2>Idea Search</h2>
+
+<form>
+{{input value=query placeholder="Search by idea title..."}}
+</form>
+
+{{#each matches as |idea|}}
+  {{view-idea idea=idea}}
+{{/each}}
+
