@@ -468,15 +468,38 @@ img[alt=width100] {
       flex: 1 0 auto;
       padding-right: 2px;
     }
-    .edit-deadline {
-    }
   }
 }
 
 .idea-calendar {
   padding-top: 15px;
-  .fc-title {
-    //cursor: pointer;
+}
+
+.view-coder {
+  img {
+    border: 5px solid;
+    border-color: #eee;
+    float: left;
+  }
+  .coder-info {
+    float: left;
+    padding: 12px;
+  }
+}
+
+.settings {
+  .settings-avatar {
+    width: 80px;
+    height: 80px;
+    border: 5px solid;
+    border-color: #ddd;
+    cursor: pointer;
+  }
+  .settings-avatar:first-of-type {
+    border-color: #aaf;
+  }
+  .settings-avatar:hover {
+    border-color: #afa;
   }
 }
 

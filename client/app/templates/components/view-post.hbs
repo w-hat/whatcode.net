@@ -2,8 +2,9 @@
 <img class="cover" src="{{post.image}}">
 {{/if}}
 <h1>{{post.title}}</h1>
-<p>Posted {{post.posted}} by {{post.author.display}}</p>
+<p>Posted {{post.posted}} by {{#link-to 'coder' post.author.id}}{{post.author.display}}{{/link-to}}</p>
 
 {{what-bars post.content enabled sanitizer class="content"}}
 
 <div class="clear"></div>
+

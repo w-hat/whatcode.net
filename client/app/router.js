@@ -14,6 +14,9 @@ Router.map(function() {
   this.route('ideas-calendar', {path: '/ideas/calendar'});
   this.route('ideas-calendar', {path: '/ideas/calendar/:date'});
   this.route('ideas-search', {path: '/ideas/search'});
+  this.route('coder', {path: '/coder'});
+  this.route('coder', {path: "/coder/:id"});
+  this.route('settings');
 });
 
 export default Router;

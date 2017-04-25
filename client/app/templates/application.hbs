@@ -19,9 +19,11 @@
     <div class="item">
       <a {{action session.deauthenticate true}}>Deauthenticate</a>
     </div>
-    <div class="item">
-      <img src="{{session.coder.avatar}}">
-    </div>
+      {{#link-to 'coder' session.coder.id}}
+      <div class="item">
+        <img src="{{session.coder.avatar}}">
+      </div>
+      {{/link-to}}
     {{else}}
     <div class="item">
       <a {{action 'showModal' true}}>Authenticate</a>

@@ -1,6 +1,11 @@
+{{#link-to 'coder' comment.author.id}}
 <img class="avatar" src="{{comment.author.avatar}}">
+{{/link-to}}
 <div class="right-side">
+  {{#link-to 'coder' comment.author.id}}
   <div class="author">{{comment.author.display}}</div>
+  {{/link-to}}
   <div class="time">{{comment.created}}</div>
   {{what-bars comment.content enabled sanitizer class="content"}}
 </div>
+
