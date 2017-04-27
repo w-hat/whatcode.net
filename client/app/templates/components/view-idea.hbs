@@ -12,11 +12,16 @@
     {{/unless}}
     {{fa-icon check class="green" title=checkText click=(action "toggleCompleted")}}
     {{fa-icon "pencil" class="blue" title="Edit" click=(action "toggleEditing")}}
+    {{fa-icon "share-alt" class="purple" title="Share" click=(action "toggleSharing")}}
     {{fa-icon "close" class="red" title="Delete" click=(action "deleteIdea")}}
   </span>
   <div class="clear"></div>
 {{/draggable-object}}
 {{#if isExpanded}}
+  {{#if isSharing}}
+    <div>Shared with: {{ownersString}}</div>
+    {{share-idea idea=idea callback=(action "toggleSharing")}}
+  {{/if}}
   {{#if isEditing}}
     {{edit-idea idea=idea callback=(action "toggleEditing")}}
   {{else}}

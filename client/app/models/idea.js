@@ -1,7 +1,8 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  owner: DS.belongsTo('coder'),
+  creator: DS.belongsTo('coder'),
+  owners: DS.hasMany('coder'),
   parent: DS.belongsTo('idea', { inverse: 'children', async: true }),
   children: DS.hasMany('idea', { inverse: 'parent', async: true }),
   created: DS.attr('date'),
@@ -17,3 +18,4 @@ export default DS.Model.extend({
     this.destroyRecord();
   },
 });
+

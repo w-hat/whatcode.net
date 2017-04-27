@@ -10,6 +10,15 @@ export default Ember.Component.extend({
   classNameBindings: ['idea.completed:completed', 'idea.importance:important'],
   idea: null,
   isEditing: false,
+  isSharing: false,
+  ownersString: Ember.computed('idea.owners.@each.display', function() {
+    const owners = this.get('idea.owners');
+    //if (owners.length > 1) {
+      return owners.map(owner => owner.get('display')).join(", ");
+    //} else {
+    //  return "";
+    //}
+  }),
   caret: Ember.computed('isExpanded', function() {
     return (this.get('isExpanded') ? 'caret-down' : 'caret-right');
   }),
@@ -47,11 +56,17 @@ export default Ember.Component.extend({
     },
     toggleEditing() {
       this.set('isExpanded', true);
+      this.set('isSharing', false);
       this.toggleProperty('isEditing');
     },
     toggleImportant() {
       this.set('idea.importance', this.get('idea.importance') ? 0 : Date.now());
       this.get('idea').save();
+    },
+    toggleSharing() {
+      this.set('isExpanded', true);
+      this.set('isEditing', false);
+      this.toggleProperty('isSharing');
     },
     startDrag() {
       this.set('isExpanded', false);

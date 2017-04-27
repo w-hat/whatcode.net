@@ -26,7 +26,7 @@ describe('Idea', () => {
         expect(ideas).to.have.length.of.at.least(1);
         for (let idea of ideas) {
           expect(idea._id).to.be.a('string');
-          expect(idea.owner).to.be.a('string');
+          expect(idea.owners).to.be.an('array');
           expect(idea.title).to.be.a('string');
         }
       });
@@ -41,6 +41,33 @@ describe('Idea', () => {
         expect(ideas[0].title).to.equal('Narf');
       });
     });
+    
+    it("should return an idea with a query id", async () => {
+      const bearer = await bearerToken('pinky');
+      const path = '/s/ideas?id=' + fixtures.Idea[0]._id;
+      return request.get(path).set('auth', bearer).expect(res => {
+        expect(res.body.idea.title).to.equal('Narf');
+      }).expect(200);
+    });
+    
+    it("should not return another coder's idea with a query id", async () => {
+      const bearer = await bearerToken('pinky');
+      const path = '/s/ideas?id=' + fixtures.Idea[1]._id;
+      return request.get(path).set('auth', bearer).expect(res => {
+        expect(res.body.idea).to.be.undefined;
+      }).expect(401);
+    });
+    
+    it("should grant access to an idea with an access code", async () => {
+      const bearer = await bearerToken('pinky');
+      const id = fixtures.Idea[1]._id;
+      const access = fixtures.Idea[1].created.getTime().toString(32).slice(4);
+      const path = '/s/ideas?id=' + id + '&access=' + access;
+      return request.get(path).set('auth', bearer).expect(res => {
+        expect(res.body.idea.title).to.equal("Take over the world");
+        expect(res.body.idea.owners).to.have.length(2);
+      }).expect(200);
+    });
   });
   
   describe('GET /s/ideas/:idea_id', () => {
@@ -53,7 +80,7 @@ describe('Idea', () => {
     });
     
     it("should not return another coder's idea", async () => {
-      const bearer = await bearerToken('pinky');
+      const bearer = await bearerToken('admin');
       const path = '/s/ideas/' + fixtures.Idea[1]._id;
       return request.get(path).set('auth', bearer).expect(res => {
         expect(res.body.idea).to.be.undefined;
@@ -80,7 +107,28 @@ describe('Idea', () => {
       expect(ideas).to.have.length(3);
       ideas = await Idea.find({title: 'Make money'});
       expect(ideas).to.have.length(1);
-      expect(ideas[0].owner.equals(fixtures.Coder[2]._id)).to.be.true;
+      expect(ideas[0].owners).to.have.length(1);
+      expect(ideas[0].owners[0].equals(fixtures.Coder[2]._id)).to.be.true;
+    });
+    
+    it('should create an idea with due date.', async () => {
+      const soon = new Date(Date.now() + 10000);
+      const a = await bearerToken('pinky');
+      const b = {idea: {
+        title: 'Run on wheel',
+        deadline: soon,
+        body: "Get exercise!",
+      }};
+      let ideas = await Idea.find();
+      expect(ideas).to.have.length(3);
+      await request.post('/s/ideas').send(b).set('auth', a).expect(200);
+      ideas = await Idea.find();
+      expect(ideas).to.have.length(4);
+      ideas = await Idea.find({title: 'Run on wheel'});
+      expect(ideas).to.have.length(1);
+      expect(ideas[0].owners).to.have.length(1);
+      expect(ideas[0].owners[0].equals(fixtures.Coder[1]._id)).to.be.true;
+      expect(ideas[0].deadline.toString()).to.equal(soon.toString());
     });
     
     it('should create an idea with a parent.', async () => {
@@ -184,6 +232,37 @@ describe('Idea', () => {
       await request.del(url).set('auth', brain_auth).expect(200);
       ideas = await Idea.find({title: 'Buy lottery tickets'});
       expect(ideas).to.have.length(0);
+    });
+  });
+  
+  describe('POST /share-idea', () => {
+    it('should send an email', async () => {
+      expect(server.sentEmails).to.have.length(0);
+      const brain_auth = await bearerToken('brain');
+      const data = {
+        idea_id: fixtures.Idea[1]._id,
+        email: 'pinky@example.com',
+        message: 'This will be easy.',
+      };
+      const url = '/s/share-idea?';
+      await request.post(url).send(data).set('auth', brain_auth).expect(200);
+      expect(server.sentEmails).to.have.length(1);
+      expect(server.sentEmails[0].to).to.equal('pinky@example.com');
+      expect(server.sentEmails[0].subject).to.contain('The Brain shared an');
+    });
+    
+    it('should not work if the coder does not own the idea', async () => {
+      expect(server.sentEmails).to.have.length(1);
+      const brain_auth = await bearerToken('brain');
+      const run_on_wheel = await Idea.findOne({title: 'Run on wheel'});
+      const data = {
+        idea_id: run_on_wheel._id,
+        email: 'brain@example.com',
+        message: 'Whose idea is this?',
+      };
+      const url = '/s/share-idea?';
+      await request.post(url).send(data).set('auth', brain_auth).expect(401);
+      expect(server.sentEmails).to.have.length(1);
     });
   });
 });

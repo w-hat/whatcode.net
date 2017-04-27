@@ -15,7 +15,7 @@
 
 <toolbar>
   <div class="center-column">
-    {{#if session.coder}}
+    {{#if session.coder.id}}
     <div class="item">
       <a {{action session.deauthenticate true}}>Deauthenticate</a>
     </div>
@@ -24,6 +24,9 @@
         <img src="{{session.coder.avatar}}">
       </div>
       {{/link-to}}
+      <div class="item">
+        {{fa-icon 'bell-o' class="notification-bell" title="No notifications"}}
+      </div>
     {{else}}
     <div class="item">
       <a {{action 'showModal' true}}>Authenticate</a>

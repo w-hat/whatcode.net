@@ -16,6 +16,7 @@ html, body, div, img {
 .orange { color: #f60; }
 .green { color: #0e0; }
 .blue { color: #00e; }
+.purple { color: #e0e; }
 
 a {
   text-decoration: none;
@@ -90,6 +91,18 @@ toolbar {
   }
   a:hover { background-color: $glow; }
   img { height: 40px; }
+  .notification-bell {
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+    text-align: center;
+    font-size: 2em;
+    cursor: pointer;
+    color: #aaa;
+  }
+  .notification-bell:hover {
+    color: $blue;
+  }
 }
 
 @mixin whatform {

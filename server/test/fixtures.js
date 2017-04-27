@@ -68,7 +68,8 @@ Plus, they both have small hands and both look like thieves.`,
 
 const Idea = [{
   _id: new ObjectID(),
-  owner: PINKY_ID,
+  creator: PINKY_ID,
+  owners: [PINKY_ID],
   created: new Date("April 16, 2017"),
   target: null,
   title: "Narf",
@@ -78,7 +79,8 @@ const Idea = [{
   importance: 0,
 }, {
   _id: new ObjectID(),
-  owner: BRAIN_ID,
+  creator: BRAIN_ID,
+  owners: [BRAIN_ID],
   created: new Date("April 16, 2017"),
   target: new Date("April 16, 2018"),
   title: "Take over the world",
