@@ -1,16 +1,16 @@
 {{idea-settings}}
 
 {{#if session.coder}}
-  {{#if importantIdeas}}
-    <h1 class="center">Short List ({{importantIdeas.length}})</h1>
-    {{view-ideas ideas=importantIdeas parent='short-list'}}
+  {{#if session.importantIdeas}}
+    <h1 class="center">Short List ({{session.importantIdeas.length}})</h1>
+    {{view-ideas ideas=session.importantIdeas parent='short-list'}}
   {{/if}}
   <h1 class="center">All Ideas</h1>
   {{add-idea}}
-  {{#if rootIdeas}}
-    {{view-ideas ideas=rootIdeas}}
+  {{#if session.rootIdeas}}
+    {{view-ideas ideas=session.rootIdeas}}
   {{else}}
-    {{#if ideas.length}}
+    {{#if session.ideas.length}}
       <p>All of your ideas are completed!</p>
     {{else}}
       <p>You have not recorded any ideas yet.</p>

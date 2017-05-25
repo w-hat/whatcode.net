@@ -3,16 +3,11 @@ import moment from 'moment';
 
 export default Ember.Route.extend({
   model(params) {
-    const date = new Date((params.date !== 'today' && params.date)||Date.now());
-    const ideas = this.get('store').findAll('idea').catch(function(/* err */) {
-      return [];
-    });
-    return Ember.RSVP.hash({date, ideas});
+    return new Date((params.date !== 'today' && params.date) || Date.now());
   },
   titleToken(model) {
     if (model) {
-      const date = model.date;
-      return moment(date).format('MMMM YYYY') + ' Ideas';
+      return moment(model).format('MMMM YYYY') + ' Ideas';
     } else {
       return 'Ideas Calendar';
     }

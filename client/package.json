@@ -46,8 +46,8 @@
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.13.0",
     "ember-welcome-page": "^3.0.0",
-    "ember-what-session": "0.0.7",
-    "ember-whatbars": "0.2.1",
+    "ember-what-session": "0.1.0",
+    "ember-whatbars": "0.2.2",
     "loader.js": "^4.2.3"
   },
   "engines": {
