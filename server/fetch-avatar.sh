@@ -5,7 +5,7 @@ TEMPNAME=./temp/$$-$RANDOM
 wget -q -T 5 -O $TEMPNAME $1
 
 # Remove all meta-data.
-exiv2 rm $TEMPNAME
+exiv2 rm -q $TEMPNAME
 
 # Rename the image based on its content.
 IDENTITY=`identify -quiet -format %#.%m $TEMPNAME`
